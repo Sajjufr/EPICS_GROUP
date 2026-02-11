@@ -502,6 +502,12 @@
                 <li><a href="#features">Features</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
+                 <li>
+        <button onclick="toggleLanguage()" 
+            style="padding:6px 14px; border:none; border-radius:20px; background:#f39c12; color:white; font-weight:bold; cursor:pointer;">
+            हिंदी
+        </button>
+    </li>
             </ul>
         </nav>
     </header>
@@ -538,7 +544,7 @@
                     Ask questions anytime, anywhere. Our intelligent chatbot provides instant answers to your 
                     doubts in Physics, Chemistry, and Mathematics.
                 </p>
-                <a href="#chatbot" class="feature-link">Start Learning</a>
+                <a href="chatbot.html"feature-link">Start Learning</a>
             </div>
 
             <div class="feature-card">
@@ -558,7 +564,7 @@
                     Master formulas, concepts, and key points with interactive flashcards. 
                     Perfect for quick revision before exams.
                 </p>
-                <a href="#flashcards" class="feature-link">Start Revising</a>
+                <a href="flashcards.html" class="feature-link">Start Revising</a>
             </div>
 
             <div class="feature-card">
@@ -593,7 +599,33 @@
             </div>
         </div>
     </section>
+               <section class="features">
+    <div class="features-header">
+        <h2>English to Hindi Translator</h2>
+        <p>Translate your doubts instantly</p>
+    </div>
 
+    <div style="text-align:center;">
+        <textarea id="englishText" 
+            placeholder="Enter English text"
+            style="width:70%; height:120px; padding:15px; border-radius:15px; border:1px solid #ccc;">
+        </textarea>
+
+        <br><br>
+
+        <button onclick="translateText()" class="cta-button">
+            Translate to Hindi
+        </button>
+
+        <br><br>
+
+        <textarea id="hindiText" 
+            placeholder="Hindi Translation"
+            style="width:70%; height:120px; padding:15px; border-radius:15px; border:1px solid #ccc;"
+            readonly>
+        </textarea>
+    </div>
+</section>
     <footer>
         <p>Made with <span class="footer-heart">♥</span> for aspiring engineers</p>
         <p>© 2024 JEE Dreams. Breaking barriers, building futures.</p>
@@ -641,6 +673,24 @@
         document.querySelectorAll('.feature-card').forEach(card => {
             observer.observe(card);
         });
+        async function translateText() {
+    let text = document.getElementById("englishText").value;
+
+    if (text.trim() === "") {
+        alert("Please enter some text!");
+        return;
+    }
+
+    let response = await fetch(
+        "https://api.mymemory.translated.net/get?q=" 
+        + encodeURIComponent(text) + "&langpair=en|hi"
+    );
+
+    let data = await response.json();
+
+    document.getElementById("hindiText").value =
+        data.responseData.translatedText;
+}
     </script>
 </body>
 </html>
