@@ -462,6 +462,12 @@
                 <li><a href="#features">Features</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li>
+        <button onclick="toggleLanguage()" 
+            style="padding:6px 14px; border:none; border-radius:20px; background:#f39c12; color:white; font-weight:bold; cursor:pointer;">
+            हिंदी
+        </button>
+    </li>
             </ul>
         </nav>
     </header>
@@ -534,12 +540,8 @@
                 <h3>100%</h3>
                 <p>Free Access</p>
             </div>
-            <div class="stat-item">
-                <h3>24/7</h3>
-                <p>Learning Support</p>
-            </div>
-            <div class="stat-item">
-                <h3>1000+</h3>
+             <div class="stat-item">
+                 <h3>1000+</h3>
                 <p>Practice Questions</p>
             </div>
             <div class="stat-item">
@@ -548,12 +550,38 @@
             </div>
         </div>
     </section>
+         <section class="features">
+    <div class="features-header">
+        <h2>English to Hindi Translator</h2>
+        <p>Translate your doubts instantly</p>
+    </div>
 
+    <div style="text-align:center;">
+        <textarea id="englishText" 
+            placeholder="Enter English text"
+            style="width:70%; height:120px; padding:15px; border-radius:15px; border:1px solid #ccc;">
+        </textarea>
+
+        <br><br>
+
+        <button onclick="translateText()" class="cta-button">
+            Translate to Hindi
+        </button>
+
+        <br><br>
+
+        <textarea id="hindiText" 
+            placeholder="Hindi Translation"
+            style="width:70%; height:120px; padding:15px; border-radius:15px; border:1px solid #ccc;"
+            readonly>
+        </textarea>
+    </div>
+</section>
     <footer>
         <p>Made with <span class="footer-heart">♥</span> for aspiring engineers</p>
         <p>© 2024 JEE Dreams. Breaking barriers, building futures.</p>
     </footer>
-
+ 
     <script>
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -596,6 +624,25 @@
         document.querySelectorAll('.feature-card').forEach(card => {
             observer.observe(card);
         });
+        async function translateText() {
+    let text = document.getElementById("englishText").value;
+
+    if (text.trim() === "") {
+        alert("Please enter some text!");
+        return;
+    }
+
+    let response = await fetch(
+        "https://api.mymemory.translated.net/get?q=" 
+        + encodeURIComponent(text) + "&langpair=en|hi"
+    );
+
+    let data = await response.json();
+
+    document.getElementById("hindiText").value =
+        data.responseData.translatedText;
+}
+
     </script>
 </body>
 </html>
